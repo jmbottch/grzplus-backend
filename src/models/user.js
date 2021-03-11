@@ -9,6 +9,18 @@ const UserSchema = new Schema({
         
     },
 
+    firstName: {
+        type: String,
+        unique: false,
+        required: [true, "First name is required"]
+    },
+
+    lastName : {
+        type: String,
+        unique: false,
+        required: [true, "Last name is required"]
+    },
+
     password: {
         type: String,
         validate: {
