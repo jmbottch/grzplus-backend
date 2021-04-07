@@ -1,7 +1,8 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const config = require('../../config/mongoConfig')
+const config = require('../../config/mongoConfig');
+const Patient = require('../models/patient');
 
 
 const taken = "This Email is already taken.";
@@ -42,12 +43,21 @@ module.exports = {
         User.findOne({ email: req.body.email }).select('+password')
             .then((user) => {
                 if (user == null) {
-                    res.status(401).send({ Error: passwordInvalid })
+                    Patient.findOne({email : req.body.email }).select('+password')
+                    .then((patient) => {
+                        var passwordIsValid = bcrypt.compareSync(req.body.password, patient.password);
+                        if(passwordIsValid == false) {
+                            res.status(401).send({Error : passwordInvalid})
+                        } else {
+                            var token = jwt.sign({id: patient.id}, config.patientsecret, {
+                                expiresIn: 86400
+                            })
+                            res.status(200).send({token : token, patientid: patient.id})
+                        }
+                    })
                 } else {
                     var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-                    console.log(bcrypt.hashSync(req.body.password, 8))
-                    console.log(user.password)
-                    console.log(passwordIsValid)
+                    
                     if (passwordIsValid == false) {
                         res.status(401).send({ Error: passwordInvalid })
                     } else {
@@ -84,6 +94,23 @@ module.exports = {
                 return res.status(401).send({ Error: invalidToken });   // give error response
             }
             if (decoded) next();                                        // else go on
+        })
+    },
+
+    //validate if user is Patient
+    validatePatient(req, res) {
+        if (!req.headers.authorization) {                               // if there is no auth header
+            return res.status(401).send({ Error: noTokenProvided });    // give error response
+        }
+        let token = req.headers.authorization.split(' ')[1]             // split Bearer from token
+        if (token === 'null' || token === null) {                       // if there is no token
+            return res.status(401).send({ Error: noTokenProvided });    // give error response
+        }
+        jwt.verify(token, config.patientsecret, function (err, decoded) {      // verify the token with the secret
+            if (err) {                                                  // if it goes wrong        
+                return res.status(401).send({ Error: invalidToken });   // give error response
+            }
+            if (decoded) res.status(200).send({patientlogin : true})                                        // else go on
         })
     },
 

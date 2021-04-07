@@ -14,5 +14,6 @@ module.exports = {
    //  dburl,
     dburl_env,
     'secret' : 'supersecret',
-    'adminsecret' : 'lksdajg;asdyoqwejtlksjdgja'
+    'adminsecret' : 'lksdajg;asdyoqwejtlksjdgja',
+    'patientsecret' : 'djhasdghasdgalsduapsldjg'
 };

@@ -10,5 +10,15 @@ module.exports = {
         .catch((err) => {
             res.status(401).send({Error: "No users found"})
         })
+    },
+
+    getAll(req,res) {
+        User.find()
+        .then((users) => {
+            res.status(200).send(users);
+        })
+        .catch((err) => {
+            res.status(401).send({Error: "No users found"})
+        })
     }
 }

@@ -8,6 +8,10 @@ const config = require('./config/mongoConfig');
 
 //import routes
 const userRoutes = require('./routes/userRoutes');
+const patientRoutes = require('./routes/patientRoutes');
+const resuscicationRoutes = require('./routes/resuscicationRoutes');
+const mobilityRoutes = require('./routes/mobilityRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 //define express app
 const app = express();
@@ -27,6 +31,10 @@ var connection = mongoose.connection
 
 //add routes to app
 userRoutes(app);
+patientRoutes(app);
+resuscicationRoutes(app);
+mobilityRoutes(app);
+authRoutes(app);
 
 const port = process.env.PORT || '3000';
 app.set('port', port);
