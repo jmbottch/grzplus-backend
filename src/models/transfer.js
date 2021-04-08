@@ -5,14 +5,14 @@ const TransferSchema = new Schema({
     value: {
         type:String,
         unique: true,
-        required: [true, 'Email address is required']
+        required: [true, 'Value address is required']
         
     },
 
     image: {
         type: String,
         unique: false,
-        required: [true, "First name is required"]
+        required: [true, "Value name is required"]
     }
 })
 

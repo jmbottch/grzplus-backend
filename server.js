@@ -24,9 +24,9 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname));
 
 //connection with database
-mongoose.connect(config.dburl_env, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(config.dburl, { useNewUrlParser: true, useUnifiedTopology: true });
 var connection = mongoose.connection
-    .once('open', () => console.log('Connected to MongoDB on ' + config.dburl_env))
+    .once('open', () => console.log('Connected to MongoDB on ' + config.dburl))
     .on('error', (error) => {
         console.warn('Warning', error.toString());
     })

@@ -8,11 +8,13 @@ var env = {
 }
 
 var dburl_env = "mongodb://localhost:27017/ZorgPlusDB";
+var dburl="mongodb+srv://admin-jeroen:SecretPassword@grzplus.yyahl.mongodb.net/GRZDB?retryWrites=true&w=majority";
 
 module.exports = {
     env,
    //  dburl,
     dburl_env,
+    dburl,
     'secret' : 'supersecret',
     'adminsecret' : 'lksdajg;asdyoqwejtlksjdgja',
     'patientsecret' : 'djhasdghasdgalsduapsldjg'
