@@ -25,9 +25,14 @@ module.exports = {
         .populate({path: 'comments', populate:{ path: 'author', model: 'user'}})
         .populate({path: 'appointments', populate:{path: 'practitioner', model:'user'}})
         .populate('resuscitation')
-        .populate('mobilityInRoom')
-        .populate('mobilityOnDepartment')
-        .populate('mobilityOffDepartment')
+        .populate({path: 'mobilityInRoom', populate: {path: 'mobility', model: 'mobility'}})
+        .populate({path: 'mobilityInRoom', populate: {path: 'facscore', model: 'fac'}})
+        .populate({path: 'mobilityOnDepartment', populate: {path: 'mobility', model: 'mobility'}})
+        .populate({path: 'mobilityOnDepartment', populate: {path: 'facscore', model: 'fac'}})
+        .populate({path: 'mobilityOffDepartment', populate: {path: 'mobility', model: 'mobility'}})
+        .populate({path: 'mobilityOffDepartment', populate: {path: 'facscore', model: 'fac'}})  
+        .populate({path: 'transfer', populate: {path: 'transfer', model: 'transfer'}})
+        .populate({path: 'transfer', populate : {path: 'facscore', model: 'fac'}})
         .then((patients) => {
             res.status(200).send(patients)
         })
@@ -42,9 +47,14 @@ module.exports = {
         .populate({path: 'comments', populate:{ path: 'author', model: 'user'}})
         .populate({path: 'appointments', populate:{path: 'practitioner', model:'user'}})
         .populate('resuscitation')
-        .populate('mobilityInRoom')
-        .populate('mobilityOnDepartment')
-        .populate('mobilityOffDepartment')
+        .populate({path: 'mobilityInRoom', populate: {path: 'mobility', model: 'mobility'}})
+        .populate({path: 'mobilityInRoom', populate: {path: 'facscore', model: 'fac'}})
+        .populate({path: 'mobilityOnDepartment', populate: {path: 'mobility', model: 'mobility'}})
+        .populate({path: 'mobilityOnDepartment', populate: {path: 'facscore', model: 'fac'}})
+        .populate({path: 'mobilityOffDepartment', populate: {path: 'mobility', model: 'mobility'}})
+        .populate({path: 'mobilityOffDepartment', populate: {path: 'facscore', model: 'fac'}})       
+        .populate({path: 'transfer', populate: {path: 'transfer', model: 'transfer'}})
+        .populate({path: 'transfer', populate : {path: 'facscore', model: 'fac'}}) 
         .then((patient) => {
             res.status(200).send(patient);
         })
@@ -73,7 +83,8 @@ module.exports = {
             resuscitation : req.body.resuscitation,
             mobilityInRoom : req.body.mobilityInRoom,
             mobilityOnDepartment : req.body.mobilityOnDepartment,
-            mobilityOffDepartment : req.body.mobilityOffDepartment
+            mobilityOffDepartment : req.body.mobilityOffDepartment,
+            transfer: req.body.transfer
         })
         .then((user) => {
             res.status(200).send({Message : success})

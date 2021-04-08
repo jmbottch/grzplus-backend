@@ -106,19 +106,37 @@ const PatientSchema = new Schema({
 
     // Class mobility moet zijn id + beschrijving + icon
     mobilityInRoom : {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'mobility',
+        mobility : {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'mobility'
+        },
+        facscore: {
+            type:mongoose.Schema.Types.ObjectId,
+            ref: 'fac'
+        }
         // required: [true, 'Mobility in Room is required']
     },
     mobilityOnDepartment : {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'mobility',
+        mobility : {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'mobility'
+        },
+        facscore: {
+            type:mongoose.Schema.Types.ObjectId,
+            ref: 'fac'
+        }
         // required: [true, 'Mobility on Department is required']
     },
     mobilityOffDepartment : {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'mobility',
-        // required: [true, 'Mobility on Department is required']
+        mobility : {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'mobility'
+        },
+        facscore: {
+            type:mongoose.Schema.Types.ObjectId,
+            ref: 'fac'
+        }
+        // required: [true, 'Mobility off Department is required']
     },
 
     //informatie voor dietist
@@ -139,10 +157,16 @@ const PatientSchema = new Schema({
 
 
     //class Transfer moet zijn id + beschrijving + plaatje
-    // transfer : {
-    //     type : Transfer,
-    //     required : false
-    // },
+    transfer : {
+        transfer: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'transfer'
+        },
+        facscore : {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'fac'
+        }
+    },
 
     goalOfTheWeek : {
         type : String,
