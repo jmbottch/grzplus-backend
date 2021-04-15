@@ -104,7 +104,7 @@ module.exports = {
             { _id: req.params.id },
             {
                 $addToSet: {
-                    practitioners: req.body.practitioner
+                    "practitioners": req.body.practitioner
                 }
             }
         )

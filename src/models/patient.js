@@ -76,7 +76,7 @@ const PatientSchema = new Schema({
     practitioners : [{
         type : mongoose.Schema.Types.ObjectId,
         ref: 'user',
-        required : [true, 'Patient must have at least one pactitioner']
+        // required : [true, 'Patient must have at least one pactitioner']
     }],
     
     appointments : [{
