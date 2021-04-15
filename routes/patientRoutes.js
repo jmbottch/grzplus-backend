@@ -7,4 +7,6 @@ module.exports = (app) => {
 
     app.post('/api/patients',  patientController.create); //AuthController.validateAdmin,
 
+    app.put('/api/patients/:id/adduser', patientController.addUser)
+
 }
