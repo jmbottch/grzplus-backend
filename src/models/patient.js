@@ -2,12 +2,17 @@ const mongoose = require('mongoose');
 const User = require('./user');
 const Schema = mongoose.Schema;
 
+const opts = {
+    // Make Mongoose use Unix time (seconds since Jan 1, 1970)
+    timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
+};
+
 const PatientSchema = new Schema({
     email: {
-        type:String,
+        type: String,
         unique: true,
         required: [true, 'Email address is required']
-        
+
     },
 
     firstName: {
@@ -16,7 +21,7 @@ const PatientSchema = new Schema({
         required: [true, "First name is required"]
     },
 
-    lastName : {
+    lastName: {
         type: String,
         unique: false,
         required: [true, "Last name is required"]
@@ -25,7 +30,7 @@ const PatientSchema = new Schema({
     password: {
         type: String,
         validate: {
-            validator:(password) => password.length > 9,
+            validator: (password) => password.length > 9,
             message: 'Password must be at least 10 characters'
         },
         required: [true, 'password is required'],
@@ -37,102 +42,110 @@ const PatientSchema = new Schema({
         required: [true, "Date of Birth is required"]
     },
 
-    roomNr : {
-        type : String,
+    roomNr: {
+        type: String,
         required: [true, 'Roomnumber is required']
     },
 
-    dateOfDeparture : {
+    dateOfDeparture: {
         type: Date,
         required: false
     },
 
-    comments : [{
-        author : {
-            type : String
-        },
-        content : {
-            type : String
-        }
-    }],   
+    comments: [{
+        type: new mongoose.Schema({
+            author: {
+                type: String
+            },
+            content: {
+                type: String
+            },
+            createdAt : {
+                type:Date,
+                default: Date.now,
+                required: true
+            }
+        })
+        
+    }],
 
     //shared informatie
-    exercises : [{
-        title :{
-            type : String,
-            required : [true, 'title is required']
+    exercises: [{
+        title: {
+            type: String,
+            required: [true, 'title is required']
         },
-        description :{
-            type : String,
-            required : false
+        description: {
+            type: String,
+            required: false
         },
-        link : {
-            type : String,
-            required : false
+        link: {
+            type: String,
+            required: false
         }
     }],
 
-    practitioners : [{
-        type : mongoose.Schema.Types.ObjectId,
+    practitioners: [{
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
         // required : [true, 'Patient must have at least one pactitioner']
     }],
-    
-    appointments : [{
+
+    appointments: [{
         date: {
-            type:Date,
+            type: Date,
             required: [true, 'Date is required']
-            
+
         },
-    
-        description : {
+
+        description: {
             type: String,
             required: [true, "Description is required"]
         },
-    
+
         practitioner: {
             type: mongoose.Schema.Types.ObjectId,
-            ref:'user',
+            ref: 'user',
             required: [true, 'Practitioner is required'],
-            
+
         }
     }],
 
-    resuscitation : {
+    resuscitation: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:'resuscication',        
+        ref: 'resuscication',
     },
 
     // Class mobility moet zijn id + beschrijving + icon
-    mobilityInRoom : {
-        mobility : {
+    mobilityInRoom: {
+        mobility: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'mobility'
         },
         facscore: {
-            type:mongoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'fac'
         }
         // required: [true, 'Mobility in Room is required']
     },
-    mobilityOnDepartment : {
-        mobility : {
+    mobilityOnDepartment: {
+        mobility: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'mobility'
         },
         facscore: {
-            type:mongoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'fac'
         }
         // required: [true, 'Mobility on Department is required']
     },
-    mobilityOffDepartment : {
-        mobility : {
+    mobilityOffDepartment: {
+        mobility: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'mobility'
         },
         facscore: {
-            type:mongoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'fac'
         }
         // required: [true, 'Mobility off Department is required']
@@ -141,14 +154,14 @@ const PatientSchema = new Schema({
     //informatie voor dietist
     // + exercises practitioners appointments
 
-    dietAdvice : {
-        type : String,
-        required : [false]
+    dietAdvice: {
+        type: String,
+        required: [false]
     },
 
-    swallowAdvice : {
+    swallowAdvice: {
         type: String,
-        required : [false]
+        required: [false]
     },
 
     //info voor fysio
@@ -156,20 +169,20 @@ const PatientSchema = new Schema({
 
 
     //class Transfer moet zijn id + beschrijving + plaatje
-    transfer : {
+    transfer: {
         transfer: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'transfer'
         },
-        facscore : {
+        facscore: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'fac'
         }
     },
 
-    goalOfTheWeek : {
-        type : String,
-        required : false
+    goalOfTheWeek: {
+        type: String,
+        required: false
     },
 
     // adl : {
