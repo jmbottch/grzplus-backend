@@ -23,7 +23,6 @@ module.exports = {
     getAll(req, res) {
         Patient.find()
             .populate('practitioners')
-            .populate({ path: 'comments', populate: { path: 'author', model: 'user' } })
             .populate({ path: 'appointments', populate: { path: 'practitioner', model: 'user' } })
             .populate('resuscitation')
             .populate({ path: 'mobilityInRoom', populate: { path: 'mobility', model: 'mobility' } })
@@ -38,14 +37,13 @@ module.exports = {
                 res.status(200).send(patients)
             })
             .catch((err) => {
-                res.status(401).send({ Error: "No patients found" })
+                res.status(401).send({ Error: err })
             })
     },
 
     getOne(req, res) {
         Patient.findById(req.params.id)
-            .populate('practitioners')
-            .populate({ path: 'comments', populate: { path: 'author', model: 'user' } })
+            .populate('practitioners')            
             .populate({ path: 'appointments', populate: { path: 'practitioner', model: 'user' } })
             .populate('resuscitation')
             .populate({ path: 'mobilityInRoom', populate: { path: 'mobility', model: 'mobility' } })
@@ -60,7 +58,7 @@ module.exports = {
                 res.status(200).send(patient);
             })
             .catch((err) => {
-                res.status(401).send({ Error: "No patients found" })
+                res.status(401).send({ Error: err })
             })
     },
 
@@ -118,10 +116,13 @@ module.exports = {
             })
     },
 
-    addComment(req, res) {
+    addComment(req, res) {        
         Patient.findByIdAndUpdate({_id : req.params.id}, {
             $addToSet: {
-                "comments" : req.body
+                "comments" : {
+                    author: req.body.author,
+                    content: req.body.content
+                }
             }
         })
         .then((patient) => {
@@ -130,6 +131,26 @@ module.exports = {
         })
         .catch((err) => {
             res.status(400).send(err)
+
+        })
+    },
+
+    addPatientComment(req, res) {
+        Patient.findByIdAndUpdate({_id : req.params.id}, {
+            $addToSet: {
+                "patientComments" : {
+                    author: req.body.author,
+                    content: req.body.content
+                }
+            }
+        })
+        .then((patient) => {
+            patient.save()
+            res.status(200).send(patient)
+        })
+        .catch((err) => {
+            res.status(400).send(err)
+
         })
     }
 }

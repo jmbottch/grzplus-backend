@@ -11,4 +11,6 @@ module.exports = (app) => {
 
     app.put('/api/patients/:id/addcomment', patientController.addComment)
 
+    app.put('/api/patients/:id/addPatientComment', patientController.addPatientComment)
+
 }

@@ -49,13 +49,12 @@ const PatientSchema = new Schema({
 
     comments : [{
         author : {
-            type : mongoose.Schema.Types.ObjectId,
-            ref: 'user'
+            type : String
         },
         content : {
             type : String
         }
-    }],
+    }],   
 
     //shared informatie
     exercises : [{
