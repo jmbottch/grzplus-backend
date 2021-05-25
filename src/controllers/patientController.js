@@ -116,5 +116,20 @@ module.exports = {
             .catch((err) => {
                 res.status(400).send(err)
             })
+    },
+
+    addComment(req, res) {
+        Patient.findByIdAndUpdate({_id : req.params.id}, {
+            $addToSet: {
+                "comments" : req.body
+            }
+        })
+        .then((patient) => {
+            patient.save()
+            res.status(200).send(patient)
+        })
+        .catch((err) => {
+            res.status(400).send(err)
+        })
     }
 }
