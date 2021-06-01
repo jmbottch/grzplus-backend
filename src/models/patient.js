@@ -187,7 +187,7 @@ const PatientSchema = new Schema({
                 type: String,
                 required: [false]
             },
-            snack : {
+            snacks : {
                 type: String,
                 required: [false]
             }
