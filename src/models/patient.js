@@ -60,13 +60,13 @@ const PatientSchema = new Schema({
             content: {
                 type: String
             },
-            createdAt : {
-                type:Date,
+            createdAt: {
+                type: Date,
                 default: Date.now,
                 required: true
             }
         })
-        
+
     }],
 
     //shared informatie
@@ -155,13 +155,63 @@ const PatientSchema = new Schema({
     // + exercises practitioners appointments
 
     dietAdvice: {
-        type: String,
-        required: [false]
+        breakfast: {
+            type: String,
+            required: [false]
+        },
+        lunch: {
+            type: String,
+            required: [false]
+        },
+        dinner: {
+            type: String,
+            required: [false]
+        },
     },
 
     swallowAdvice: {
-        type: String,
-        required: [false]
+        consistency: {
+            drinks: {
+                type: String,
+                required: [false]
+            },
+            regularmeal: {
+                type: String,
+                required: [false]
+            },
+            soup: {
+                type: String,
+                required: [false]
+            },
+            bread : {
+                type: String,
+                required: [false]
+            },
+            snack : {
+                type: String,
+                required: [false]
+            }
+        },
+        assistance: [{
+            type: String,
+            required: [false]
+        }],
+        movements: [{
+            type: String,
+            required: [false]
+        }],
+        tools: [{
+            type: String,
+            required: [false]
+        }],
+        hygiene: [{
+            type: String,
+            required: [false]
+        }],
+        medication: [{
+            type: String,
+            required: [false]
+        }]
     },
 
     //info voor fysio

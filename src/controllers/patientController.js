@@ -54,6 +54,7 @@ module.exports = {
             .populate({ path: 'mobilityOffDepartment', populate: { path: 'facscore', model: 'fac' } })
             .populate({ path: 'transfer', populate: { path: 'transfer', model: 'transfer' } })
             .populate({ path: 'transfer', populate: { path: 'facscore', model: 'fac' } })
+            .populate('swallowAdvice')
             .then((patient) => {
                 res.status(200).send(patient);
             })
