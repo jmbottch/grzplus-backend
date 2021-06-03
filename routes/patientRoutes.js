@@ -8,6 +8,7 @@ module.exports = (app) => {
     app.put('/api/patients/:id/adduser', patientController.addUser)
     app.put('/api/patients/:id/addcomment', patientController.addComment)
     app.put('/api/patients/:id/addappointment', patientController.addAppointment)
+    app.put('/api/patients/:id/editMainGoal', patientController.editMainGoal)
     
     
 

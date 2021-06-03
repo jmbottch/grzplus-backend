@@ -136,6 +136,28 @@ module.exports = {
             })
     },
 
+    editMainGoal(req,res) {
+        Patient.findByIdAndUpdate({_id : req.params.id})
+        .then((patient) => {
+            let mainGoalToSet = req.body.mainGoal
+            if(req.body.mainGoal === null || req.body.mainGoal === '') mainGoalToSet = patient.mainGoal
+            
+            patient.set({
+                mainGoal : mainGoalToSet
+            })
+            patient.save()
+            .then((patient) => {
+                res.status(200).send({Message : 'Operation was successful'})
+            })
+            .catch((err) => {
+                res.status(401).send({Error : err})
+            })
+        })
+        .catch((err) => {
+            res.status(401).send({Error : err})
+        })
+    },
+
     addComment(req, res) {
         Patient.findByIdAndUpdate({ _id: req.params.id }, {
             $addToSet: {
