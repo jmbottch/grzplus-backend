@@ -157,6 +157,48 @@ module.exports = {
             res.status(401).send({Error : err})
         })
     },
+    editSubGoals(req,res) {
+        Patient.findByIdAndUpdate({_id : req.params.id})
+        .then((patient) => {
+            let subgoalsToSet = req.body.subGoals
+            if(req.body.mainGoal === null || req.body.mainGoal === []) subgoalsToSet = patient.subGoals
+            
+            patient.set({
+                subGoals : subgoalsToSet
+            })
+            patient.save()
+            .then((patient) => {
+                res.status(200).send({Message : 'Operation was successful'})
+            })
+            .catch((err) => {
+                res.status(401).send({Error : err})
+            })
+        })
+        .catch((err) => {
+            res.status(401).send({Error : err})
+        })
+    },
+    editExercises(req,res) {
+        Patient.findByIdAndUpdate({_id : req.params.id})
+        .then((patient) => {
+            let exercisesToSet = req.body.exercises
+            if(req.body.exercises === null || req.body.exercises === '') exercisesToSet = patient.exercises
+            
+            patient.set({
+                exercises : exercisesToSet
+            })
+            patient.save()
+            .then((patient) => {
+                res.status(200).send({Message : 'Operation was successful'})
+            })
+            .catch((err) => {
+                res.status(401).send({Error : err})
+            })
+        })
+        .catch((err) => {
+            res.status(401).send({Error : err})
+        })
+    },
 
     addComment(req, res) {
         Patient.findByIdAndUpdate({ _id: req.params.id }, {
