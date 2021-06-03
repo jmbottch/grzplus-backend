@@ -15,6 +15,7 @@ module.exports = {
 
     getAll(req,res) {
         Transfer.find()
+        
         .then((objects) => {
             res.status(200).send(objects);
         })

@@ -200,6 +200,61 @@ module.exports = {
         })
     },
 
+    editMobilityAndTransfer(req,res) {
+        Patient.findByIdAndUpdate({_id: req.params.id})
+        .then((patient) => {
+            let transferToSet = req.body.transfer.transfer
+            let transferFacToSet = req.body.transfer.facscore
+            
+            let mobilityInRoomToSet = req.body.mobilityInRoom.mobility
+            let mobilityInRoomFacToSet = req.body.mobilityInRoom.facscore
+
+            let mobilityOnDepartmentToSet = req.body.mobilityOnDepartment.mobility
+            let mobilityOnDepartmentFacToSet = req.body.mobilityOnDepartment.facscore
+
+            let mobilityOffDepartmentToSet = req.body.mobilityOffDepartment.mobility
+            let mobilityOffDepartmentFacToSet = req.body.mobilityOffDepartment.facscore
+
+            if(req.body.transfer.transfer === '' || req.body.transfer.transfer === null) transferToSet = patient.transfer.transfer
+            if(req.body.transfer.facscore === '' || req.body.transfer.facscore === null) transferToSet = patient.transfer.facscore
+
+            if(req.body.mobilityInRoom.mobility === '' || req.body.mobilityInRoom.mobility === null) mobilityInRoomToSet = patient.mobilityInRoom.mobility
+            if(req.body.mobilityInRoom.facscore === '' || req.body.mobilityInRoom.facscore === null) mobilityInRoomToSet = patient.mobilityInRoom.facscore
+
+            if(req.body.mobilityOnDepartment.mobility === '' || req.body.mobilityOnDepartment.mobility === null) mobilityOnDepartmentToSet = patient.mobilityOnDepartment.mobility
+            if(req.body.mobilityOnDepartment.facscore === '' || req.body.mobilityOnDepartment.facscore === null) mobilityOnDepartmentToSet = patient.mobilityOnDepartment.facscore
+
+            if(req.body.mobilityOffDepartment.mobility === '' || req.body.mobilityOffDepartment.mobility === null) mobilityOffDepartmentToSet = patient.mobilityOffDepartment.mobility
+            if(req.body.mobilityOffDepartment.facscore === '' || req.body.mobilityOffDepartment.facscore === null) mobilityOffDepartmentToSet = patient.mobilityOffDepartment.facscore
+
+            patient.set({
+                transfer: {
+                    transfer : transferToSet,
+                    facscore : transferFacToSet
+                },
+                mobilityInRoom: {
+                    mobility : mobilityInRoomToSet,
+                    facscore : mobilityInRoomFacToSet
+                },
+                mobilityOnDepartment: {
+                    mobility : mobilityOnDepartmentToSet,
+                    facscore : mobilityOnDepartmentFacToSet
+                },
+                mobilityOffDepartment: {
+                    mobility : mobilityOffDepartmentToSet,
+                    facscore : mobilityOffDepartmentFacToSet
+                },
+            })
+            patient.save()
+            .then((patient) => {
+                res.status(200).send({Message : "operation successful"})
+            })
+            .catch((err) => {
+                res.status(401).send({Error : err})
+            })
+        })
+    },
+
     addComment(req, res) {
         Patient.findByIdAndUpdate({ _id: req.params.id }, {
             $addToSet: {
