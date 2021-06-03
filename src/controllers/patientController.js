@@ -216,16 +216,16 @@ module.exports = {
             let mobilityOffDepartmentFacToSet = req.body.mobilityOffDepartment.facscore
 
             if(req.body.transfer.transfer === '' || req.body.transfer.transfer === null) transferToSet = patient.transfer.transfer
-            if(req.body.transfer.facscore === '' || req.body.transfer.facscore === null) transferToSet = patient.transfer.facscore
+            if(req.body.transfer.facscore === '' || req.body.transfer.facscore === null) transferFacToSet = patient.transfer.facscore
 
             if(req.body.mobilityInRoom.mobility === '' || req.body.mobilityInRoom.mobility === null) mobilityInRoomToSet = patient.mobilityInRoom.mobility
-            if(req.body.mobilityInRoom.facscore === '' || req.body.mobilityInRoom.facscore === null) mobilityInRoomToSet = patient.mobilityInRoom.facscore
+            if(req.body.mobilityInRoom.facscore === '' || req.body.mobilityInRoom.facscore === null) mobilityInRoomFacToSet = patient.mobilityInRoom.facscore
 
             if(req.body.mobilityOnDepartment.mobility === '' || req.body.mobilityOnDepartment.mobility === null) mobilityOnDepartmentToSet = patient.mobilityOnDepartment.mobility
-            if(req.body.mobilityOnDepartment.facscore === '' || req.body.mobilityOnDepartment.facscore === null) mobilityOnDepartmentToSet = patient.mobilityOnDepartment.facscore
+            if(req.body.mobilityOnDepartment.facscore === '' || req.body.mobilityOnDepartment.facscore === null) mobilityOnDepartmentFacToSet = patient.mobilityOnDepartment.facscore
 
             if(req.body.mobilityOffDepartment.mobility === '' || req.body.mobilityOffDepartment.mobility === null) mobilityOffDepartmentToSet = patient.mobilityOffDepartment.mobility
-            if(req.body.mobilityOffDepartment.facscore === '' || req.body.mobilityOffDepartment.facscore === null) mobilityOffDepartmentToSet = patient.mobilityOffDepartment.facscore
+            if(req.body.mobilityOffDepartment.facscore === '' || req.body.mobilityOffDepartment.facscore === null) mobilityOffDepartmentFacToSet = patient.mobilityOffDepartment.facscore
 
             patient.set({
                 transfer: {
@@ -245,6 +245,7 @@ module.exports = {
                     facscore : mobilityOffDepartmentFacToSet
                 },
             })
+            console.log(req.body)
             patient.save()
             .then((patient) => {
                 res.status(200).send({Message : "operation successful"})
