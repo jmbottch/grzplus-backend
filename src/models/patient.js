@@ -230,10 +230,15 @@ const PatientSchema = new Schema({
         }
     },
 
-    goalOfTheWeek: {
+    mainGoal: {
         type: String,
         required: false
     },
+
+    subGoals :[{
+        type : String,
+        required : false
+    }]
 
     // adl : {
     //     showeringTop : {

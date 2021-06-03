@@ -32,7 +32,7 @@ module.exports = {
             .populate({ path: 'mobilityOffDepartment', populate: { path: 'mobility', model: 'mobility' } })
             .populate({ path: 'mobilityOffDepartment', populate: { path: 'facscore', model: 'fac' } })
             .populate({ path: 'transfer', populate: { path: 'transfer', model: 'transfer' } })
-            .populate({ path: 'transfer', populate: { path: 'facscore', model: 'fac' } })
+            .populate({ path: 'transfer', populate: { path: 'facscore', model: 'fac' } })       
             .then((patients) => {
                 res.status(200).send(patients)
             })
@@ -53,9 +53,8 @@ module.exports = {
             .populate({ path: 'mobilityOffDepartment', populate: { path: 'mobility', model: 'mobility' } })
             .populate({ path: 'mobilityOffDepartment', populate: { path: 'facscore', model: 'fac' } })
             .populate({ path: 'transfer', populate: { path: 'transfer', model: 'transfer' } })
-            .populate({ path: 'transfer', populate: { path: 'facscore', model: 'fac' } })
-            .populate('swallowAdvice')
-            .then((patient) => {
+            .populate({ path: 'transfer', populate: { path: 'facscore', model: 'fac' } })       
+            .then((patient) => {                
                 res.status(200).send(patient);
             })
             .catch((err) => {
@@ -77,7 +76,8 @@ module.exports = {
             practitioners: req.body.practitioners,
             comments: req.body.comments,
             exercises: req.body.exercises,
-            goalOfTheWeek: req.body.goalOfTheWeek,
+            mainGoal: req.body.mainGoal,
+            subGoals:req.body.subGoals,
             appointments: req.body.appointments,
             dateOfDeparture: req.body.dateOfDeparture,
             resuscitation: req.body.resuscitation,
@@ -96,6 +96,25 @@ module.exports = {
                     res.status(401).send(err)
                 }
             })
+    },
+
+    addAppointment(req,res) {
+        Patient.findByIdAndUpdate({_id : req.params.id} , {
+            $addToSet: {
+                "appointments" : {
+                    date : req.body.date,
+                    description: req.body.description,
+                    practitioner : req.body.practitioner
+                }
+            }
+        })
+        .then((patient) => {
+            patient.save()
+            res.status(200).send(patient)
+        })
+        .catch((err) => {
+            res.status(401).send({Error : err})
+        })
     },
 
     addUser(req, res) {
@@ -178,12 +197,7 @@ module.exports = {
                                 soup: soupToSet,
                                 bread: breadToSet,
                                 snacks: snacksToSet
-                            },                            
-                            // assistance: req.body.assistance,
-                            // movements: req.body.movements,
-                            // tools: req.body.tools,
-                            // hygiene: req.body.hygiene,
-                            // medication: req.body.medication
+                            }
                         },
                         dietAdvice: {
                             breakfast: breakfastToSet,
