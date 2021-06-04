@@ -33,6 +33,14 @@ module.exports = {
             .populate({ path: 'mobilityOffDepartment', populate: { path: 'facscore', model: 'fac' } })
             .populate({ path: 'transfer', populate: { path: 'transfer', model: 'transfer' } })
             .populate({ path: 'transfer', populate: { path: 'facscore', model: 'fac' } })       
+            .populate({ path: 'adl', populate: {path: 'showeringTop', model:'adl'}})
+            .populate({ path: 'adl', populate: {path: 'showeringBottom', model:'adl'}}) 
+            .populate({ path: 'adl', populate: {path: 'washingTop', model:'adl'}}) 
+            .populate({ path: 'adl', populate: {path: 'washingBottom', model:'adl'}}) 
+            .populate({ path: 'adl', populate: {path: 'dressingTop', model:'adl'}}) 
+            .populate({ path: 'adl', populate: {path: 'dressingBottom', model:'adl'}}) 
+            .populate({ path: 'adl', populate: {path: 'toilet', model:'adl'}})  
+            .populate({ path: 'adl', populate: {path: 'bed', model:'adl'}})   
             .then((patients) => {
                 res.status(200).send(patients)
             })
@@ -53,7 +61,15 @@ module.exports = {
             .populate({ path: 'mobilityOffDepartment', populate: { path: 'mobility', model: 'mobility' } })
             .populate({ path: 'mobilityOffDepartment', populate: { path: 'facscore', model: 'fac' } })
             .populate({ path: 'transfer', populate: { path: 'transfer', model: 'transfer' } })
-            .populate({ path: 'transfer', populate: { path: 'facscore', model: 'fac' } })       
+            .populate({ path: 'transfer', populate: { path: 'facscore', model: 'fac' } })
+            .populate({ path: 'adl', populate: {path: 'showeringTop', model:'adl'}})
+            .populate({ path: 'adl', populate: {path: 'showeringBottom', model:'adl'}}) 
+            .populate({ path: 'adl', populate: {path: 'washingTop', model:'adl'}}) 
+            .populate({ path: 'adl', populate: {path: 'washingBottom', model:'adl'}}) 
+            .populate({ path: 'adl', populate: {path: 'dressingTop', model:'adl'}}) 
+            .populate({ path: 'adl', populate: {path: 'dressingBottom', model:'adl'}}) 
+            .populate({ path: 'adl', populate: {path: 'toilet', model:'adl'}})  
+            .populate({ path: 'adl', populate: {path: 'bed', model:'adl'}})       
             .then((patient) => {                
                 res.status(200).send(patient);
             })
@@ -273,6 +289,51 @@ module.exports = {
                 res.status(400).send(err)
 
             })
+    },
+
+    editADL(req,res) {
+        Patient.findByIdAndUpdate(req.params.id)
+        .then((patient) => {
+            let showeringTopToSet = req.body.showeringTop;
+            let showeringBottomToSet = req.body.showeringBottom;
+            let washingTopToSet = req.body.washingTop;
+            let washingBottomToSet = req.body.washingBottom;
+
+            let dressingTopToSet = req.body.dressingTop;
+            let dressingBottomToSet = req.body.dressingBottom;
+            let toiletToSet = req.body.toilet;
+            let bedToSet = req.body.bed;
+
+            if(req.body.showeringTop === '' || req.body.showeringTop === null) showeringTopToSet = patient.adl.showeringTop
+            if(req.body.showeringBottom === '' || req.body.showeringBottom === null) showeringBottomToSet = patient.adl.showeringBottom
+            if(req.body.washingTop === '' || req.body.washingTop === null) washingTopToSet = patient.adl.washingTop
+            if(req.body.washingBottom === '' || req.body.washingBottom === null) washingBottomToSet = patient.adl.washingBottom
+
+            if(req.body.dressingTop === '' || req.body.dressingTop === null) dressingTopToSet = patient.adl.dressingTop
+            if(req.body.dressingBottom === '' || req.body.dressingBottom === null) dressingBottomToSet = patient.adl.dressingBottom
+            if(req.body.toilet === '' || req.body.toilet === null) toiletToSet = patient.adl.toilet
+            if(req.body.bed === '' || req.body.bed === null) bedToSet = patient.adl.bed
+
+            patient.set({
+                adl : {
+                    showeringTop : showeringTopToSet,
+                    showeringBottom : showeringBottomToSet,
+                    washingTop : washingTopToSet,
+                    washingBottom : washingBottomToSet,
+                    dressingTop : dressingTopToSet,
+                    dressingBottom : dressingBottomToSet,
+                    toilet : toiletToSet,
+                    bed : bedToSet
+                }
+            })
+            patient.save()
+            .then(() => {
+                res.status(200).send({Message : "Operation was successfull"})
+            })
+            .catch((err) => {
+                res.status(401).send({Error : err})
+            })
+        })
     },
 
     update(req, res) {

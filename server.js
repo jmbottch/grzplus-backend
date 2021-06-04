@@ -14,6 +14,7 @@ const mobilityRoutes = require('./routes/mobilityRoutes');
 const authRoutes = require('./routes/authRoutes');
 const facRoutes = require('./routes/facRoutes');
 const transferRoutes = require('./routes/transferRoutes');
+const adlRoutes = require('./routes/adlRoutes');
 
 //define express app
 const app = express();
@@ -39,6 +40,7 @@ mobilityRoutes(app);
 authRoutes(app);
 facRoutes(app);
 transferRoutes(app);
+adlRoutes(app);
 
 const port = process.env.PORT || '3000';
 app.set('port', port);

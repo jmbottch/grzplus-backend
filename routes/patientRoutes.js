@@ -12,6 +12,7 @@ module.exports = (app) => {
     app.put('/api/patients/:id/editSubGoals', patientController.editSubGoals)
     app.put('/api/patients/:id/editExercises', patientController.editExercises)
     app.put('/api/patients/:id/editMobilityAndTransfer', patientController.editMobilityAndTransfer)
+    app.put('/api/patients/:id/editADL', patientController.editADL)
     
     
 

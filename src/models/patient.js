@@ -238,42 +238,42 @@ const PatientSchema = new Schema({
     subGoals :[{
         type : String,
         required : false
-    }]
+    }],
 
-    // adl : {
-    //     showeringTop : {
-    //         type : Number,
-    //         required : false
-    //     },
-    //     showeringBottom : {
-    //         type : Number,
-    //         required : false
-    //     },
-    //     washingTop : {
-    //         type : Number,
-    //         required : false
-    //     },
-    //     washingBottom : {
-    //         type : Number,
-    //         required : false
-    //     },
-    //     dressingTop : {
-    //         type : Number,
-    //         required : false
-    //     },
-    //     dressingBottom : {
-    //         type : Number,
-    //         required : false
-    //     },
-    //     toilet : {
-    //         type : Number,
-    //         required : false
-    //     },
-    //     bed : {
-    //         type : Number,
-    //         required : false
-    //     }
-    // }
+    adl : {
+        showeringTop : {
+            type : mongoose.Schema.Types.ObjectId,
+            ref: 'adl'
+        },
+        showeringBottom : {
+            type : mongoose.Schema.Types.ObjectId,
+            ref: 'adl'
+        },
+        washingTop : {
+            type : mongoose.Schema.Types.ObjectId,
+            ref: 'adl'
+        },
+        washingBottom : {
+            type : mongoose.Schema.Types.ObjectId,
+            ref: 'adl'
+        },
+        dressingTop : {
+            type : mongoose.Schema.Types.ObjectId,
+            ref: 'adl'
+        },
+        dressingBottom : {
+            type : mongoose.Schema.Types.ObjectId,
+            ref: 'adl'
+        },
+        toilet : {
+            type : mongoose.Schema.Types.ObjectId,
+            ref: 'adl'
+        },
+        bed : {
+            type : mongoose.Schema.Types.ObjectId,
+            ref: 'adl'
+        }
+    }
 
     // cognitieve begeleiding??
 
