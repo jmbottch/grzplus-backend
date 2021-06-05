@@ -99,7 +99,8 @@ module.exports = {
             mobilityInRoom: req.body.mobilityInRoom,
             mobilityOnDepartment: req.body.mobilityOnDepartment,
             mobilityOffDepartment: req.body.mobilityOffDepartment,
-            transfer: req.body.transfer
+            transfer: req.body.transfer,
+            adl : req.body.adl
         })
             .then((user) => {
                 res.status(200).send({ Message: success })
@@ -269,7 +270,7 @@ module.exports = {
                 res.status(401).send({Error : err})
             })
         })
-    },
+    },    
 
     addComment(req, res) {
         Patient.findByIdAndUpdate({ _id: req.params.id }, {
