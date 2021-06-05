@@ -40,12 +40,7 @@ const PatientSchema = new Schema({
     dateOfBirth: {
         type: Date,
         required: [true, "Date of Birth is required"]
-    },
-
-    roomNr: {
-        type: String,
-        required: [true, 'Roomnumber is required']
-    },
+    },    
 
     dateOfDeparture: {
         type: Date,
