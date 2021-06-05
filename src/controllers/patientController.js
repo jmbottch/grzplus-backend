@@ -86,7 +86,6 @@ module.exports = {
             lastName: req.body.lastName,
             password: hashedPassword,
             dateOfBirth: req.body.dateOfBirth,
-            roomNr: req.body.roomNr,
             dietAdvice: req.body.dietAdvice,
             swallowAdvice: req.body.swallowAdvice,
             practitioners: req.body.practitioners,
